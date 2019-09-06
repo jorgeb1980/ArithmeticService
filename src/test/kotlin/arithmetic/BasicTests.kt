@@ -1,30 +1,34 @@
 package arithmetic
 
+import org.hamcrest.Matchers
 import org.junit.Assert
 import org.junit.Test
+import java.math.BigDecimal
 
 class BasicTests {
 
     private val ops = ArithmeticOperations()
 
+    fun bd(f: Float) = BigDecimal(f.toString())
+
     @Test
     fun testAdd() {
-        Assert.assertEquals(16f, ops.add(3f, 2.5f, 5.5f, -2.5f, 7f, 0.5f));
-        Assert.assertEquals(2f, ops.add(2f))
+        Assert.assertEquals(bd(16f), ops.add(bd(3f), bd(2.5f), bd(5.5f), bd(-2.5f), bd(7f), bd(0.5f)));
+        Assert.assertEquals(bd(2f), ops.add(bd(2f)))
 
     }
 
     @Test
     fun testSubtract() {
-        Assert.assertEquals(2f, ops.subtract(5f, 3f))
-        Assert.assertEquals(-7f, ops.subtract(5f, 12f))
+        Assert.assertEquals(bd(2f), ops.subtract(bd(5f), bd(3f)))
+        Assert.assertEquals(bd(-7f), ops.subtract(bd(5f), bd(12f)))
     }
 
     @Test
     fun testMultiply() {
-        Assert.assertEquals(24f, ops.product(2f, 3f, 4f))
-        Assert.assertEquals(-24f, ops.product(2f, 3f, -4f))
-        Assert.assertEquals(24f, ops.product(-2f, 3f, -4f))
+        Assert.assertThat(bd(24f), Matchers.comparesEqualTo(ops.product(bd(2f), bd(3f), bd(4f))))
+        Assert.assertThat(bd(-24f), Matchers.comparesEqualTo(ops.product(bd(2f), bd(3f), bd(-4f))))
+        Assert.assertThat(bd(24f), Matchers.comparesEqualTo(ops.product(bd(-2f), bd(3f), bd(-4f))))
     }
 
     @Test

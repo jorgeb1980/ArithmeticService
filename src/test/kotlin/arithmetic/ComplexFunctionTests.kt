@@ -2,20 +2,24 @@ package arithmetic
 
 import org.junit.Assert
 import org.junit.Test
+import java.math.BigDecimal
 
 class ComplexFunctionTests {
 
     val ops = ArithmeticOperations()
+    fun bd(f: Float) = BigDecimal(f.toString())
 
     @Test
     fun testMean() {
-        Assert.assertEquals(5f, ops.mean(5f,4f,6f))
-        Assert.assertEquals(0f, ops.mean(5f, -5f, 1f, -1f))
+        Assert.assertEquals(bd(5f), ops.mean(bd(5f), bd(4f), bd(6f)))
+        Assert.assertEquals(bd(0f), ops.mean(bd(5f), bd(-5f), bd(1f), bd(-1f)))
     }
 
     @Test
     fun testMedian() {
-        Assert.assertEquals(6f, ops.median(3f, 1f, 3f, 9f, 8f, 7f, 6f))
-        Assert.assertEquals(4.5f, ops.median(9f, 1f, 8f, 2f, 6f, 3f, 5f, 4f))
+        Assert.assertEquals(bd(6f),
+                ops.median(bd(3f), bd(1f), bd(3f), bd(9f), bd(8f), bd(7f), bd(6f)))
+        Assert.assertEquals(bd(4.5f),
+                ops.median(bd(9f), bd(1f), bd(8f), bd(2f), bd(6f), bd(3f), bd(5f), bd(4f)))
     }
 }
