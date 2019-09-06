@@ -30,37 +30,33 @@ dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version" // Required for Kotlin integration
     compile "org.springframework.boot:spring-boot-starter-web"
     testCompile('org.springframework.boot:spring-boot-starter-test')
+    testCompile 'com.google.code.gson:gson:2.8.5'
 }
 
 sourceSets {
     integrationTest {
-        //create("integrationTest") {
-        //withConvention(Class.forName('org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet').class) {
         kotlin.srcDir("src/integrationTest/kotlin")
         resources.srcDir("src/integrationTest/resources")
         compileClasspath += sourceSets["main"].output + configurations["testRuntimeClasspath"]
         runtimeClasspath += output + compileClasspath + sourceSets["test"].runtimeClasspath
-        //}
-        //}
     }
 }
 
 task runIntegrationTests (type:Test) {
+//integrationTest {
+    //useJUnitPlatform()
     description = "Runs the integration tests"
     group = "verification"
     testClassesDirs = sourceSets["integrationTest"].output.classesDirs
-    classpath = sourceSets["integrationTest"].runtimeClasspath
-    mustRunAfter(tasks["test"])
-    useJUnitPlatform()
-    useJUnit {
-        includeCategories 'arithmetic.IntegrationTests'
-    }
+    classpath = sourceSets["integrationTest"].runtimeClasspath + sourceSets["test"].runtimeClasspath
+    useJUnit { }
     testLogging {
         showStandardStreams = true
     }
 }
 
 configurations {
+    runIntegrationTestsImplementation.extendsFrom testImplementation
     runIntegrationTestsCompile.extendsFrom testCompile
     runIntegrationTestsRuntime.extendsFrom testRuntime
 }

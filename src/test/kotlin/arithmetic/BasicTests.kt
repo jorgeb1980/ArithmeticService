@@ -13,15 +13,18 @@ class BasicTests {
 
     @Test
     fun testAdd() {
-        Assert.assertEquals(bd(16f), ops.add(bd(3f), bd(2.5f), bd(5.5f), bd(-2.5f), bd(7f), bd(0.5f)));
-        Assert.assertEquals(bd(2f), ops.add(bd(2f)))
+        Assert.assertThat(bd(16f),
+                Matchers.comparesEqualTo(ops.add(bd(3f), bd(2.5f),
+                        bd(5.5f), bd(-2.5f), bd(7f), bd(0.5f))))
+        Assert.assertThat(bd(2f),
+                Matchers.comparesEqualTo(ops.add(bd(2f))))
 
     }
 
     @Test
     fun testSubtract() {
-        Assert.assertEquals(bd(2f), ops.subtract(bd(5f), bd(3f)))
-        Assert.assertEquals(bd(-7f), ops.subtract(bd(5f), bd(12f)))
+        Assert.assertThat(bd(2f), Matchers.comparesEqualTo(ops.subtract(bd(5f), bd(3f))))
+        Assert.assertThat(bd(-7f), Matchers.comparesEqualTo(ops.subtract(bd(5f), bd(12f))))
     }
 
     @Test

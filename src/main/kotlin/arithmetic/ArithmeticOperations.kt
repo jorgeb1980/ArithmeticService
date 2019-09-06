@@ -1,6 +1,7 @@
 package arithmetic
 
 import java.math.BigDecimal
+import java.math.MathContext
 import java.util.*
 
 /**
@@ -44,7 +45,7 @@ class ArithmeticOperations {
      * @returns Arithmetic mean of the values in the list, or 0 if the list is empty
      */
     fun mean(vararg values: BigDecimal): BigDecimal {
-        return if (values.isEmpty()) BigDecimal("0.0") else (add(*values).divide(BigDecimal(values.size)))
+        return if (values.isEmpty()) BigDecimal("0.0") else (add(*values).divide(BigDecimal(values.size), MathContext.DECIMAL64))
     }
 
     /**
