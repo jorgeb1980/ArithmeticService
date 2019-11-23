@@ -1,5 +1,6 @@
 package arithmetic
 
+import org.springframework.stereotype.Service
 import java.math.BigDecimal
 import java.math.MathContext
 import java.util.*
@@ -7,6 +8,7 @@ import java.util.*
 /**
  * This class implements the core logic: simple arithmetic functions
  */
+@Service
 class ArithmeticOperations {
 
     /**
@@ -17,7 +19,7 @@ class ArithmeticOperations {
     fun add(vararg values: BigDecimal) = values.reduce { sum, element -> sum + element }
 
     /**
-     * Subtraction of 2 s
+     * Difference between 2 values
      * @param minuend Value from which we subtract the subtrahend
      * @param subtrahend Value that we are subtracting from the minuend
      * @returns Difference between minuend and subtrahend
