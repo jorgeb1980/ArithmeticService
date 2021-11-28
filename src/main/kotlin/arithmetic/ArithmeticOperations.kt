@@ -14,9 +14,9 @@ class ArithmeticOperations {
     /**
      * Summatory of all the values in the list
      * @param values List of values
-     * @returns Summatory of the list
+     * @returns Summatory of the list.  Zero if empty.
      */
-    fun add(vararg values: BigDecimal) = values.reduce { sum, element -> sum + element }
+    fun add(vararg values: BigDecimal): BigDecimal = values.fold(BigDecimal.ZERO) { sum, element -> sum + element }
 
     /**
      * Difference between 2 values
@@ -29,9 +29,11 @@ class ArithmeticOperations {
     /**
      * Product of all the values in the list
      * @param values List of values
-     * @returns Product of all the values in the list
+     * @returns Product of all the values in the list.  Zero if empty.
      */
-    fun product(vararg values: BigDecimal) = values.reduce { product, element -> product * element }
+    fun product(vararg values: BigDecimal): BigDecimal =
+        if (values.isEmpty()) BigDecimal.ZERO
+        else values.reduce { product, element -> product * element }
 
     /**
      * Integer division of two numbers
@@ -39,7 +41,7 @@ class ArithmeticOperations {
      * @param divisor Number by which we divide the dividend
      * @returns Pair of values: quotient and remainder of the division
      */
-    fun integerDivision(dividend: Int, divisor: Int) = Pair<Int, Int>(dividend/divisor, dividend % divisor)
+    fun integerDivision(dividend: Int, divisor: Int) = dividend/divisor to dividend % divisor
 
     /**
      * Arithemtic mean of a list of numbers
@@ -47,7 +49,8 @@ class ArithmeticOperations {
      * @returns Arithmetic mean of the values in the list, or 0 if the list is empty
      */
     fun mean(vararg values: BigDecimal): BigDecimal {
-        return if (values.isEmpty()) BigDecimal("0.0") else (add(*values).divide(BigDecimal(values.size), MathContext.DECIMAL64))
+        return if (values.isEmpty()) BigDecimal.ZERO
+        else (add(*values).divide(BigDecimal(values.size), MathContext.DECIMAL64))
     }
 
     /**
@@ -57,11 +60,11 @@ class ArithmeticOperations {
      *  https://en.wikipedia.org/wiki/Median
      */
     fun median(vararg values: BigDecimal): BigDecimal {
-        val list = values.toList()
-        Collections.sort(list)
+        val list = values.toMutableList()
+        list.sort()
         return if (list.size % 2 == 0) {
             // If even: arithmetic mean of central values of the sorted collection
-            mean(*arrayOf(list[(list.size/2) - 1], list[list.size/2]))
+            mean(list[(list.size/2) - 1], list[list.size/2])
         }
         else {
             // If uneven: central value of the sorted collection

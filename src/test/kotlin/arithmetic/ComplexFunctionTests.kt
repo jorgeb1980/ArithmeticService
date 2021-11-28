@@ -1,28 +1,52 @@
 package arithmetic
 
-import org.hamcrest.Matchers
-import org.junit.Assert
+import org.hamcrest.Matchers.comparesEqualTo
+import org.junit.Assert.assertThat
 import org.junit.Test
 import java.math.BigDecimal
 
 class ComplexFunctionTests {
 
-    val ops = ArithmeticOperations()
-    fun bd(f: Float) = BigDecimal(f.toString())
+    private val ops = ArithmeticOperations()
 
     @Test
     fun testMean() {
-        Assert.assertThat(bd(5f), Matchers.comparesEqualTo(ops.mean(bd(5f), bd(4f), bd(6f))))
-        Assert.assertThat(bd(0f), Matchers.comparesEqualTo(ops.mean(bd(5f), bd(-5f), bd(1f), bd(-1f))))
+        assertThat(
+            ops.mean(BigDecimal(5), BigDecimal(4), BigDecimal(6)),
+            comparesEqualTo(BigDecimal(5))
+        )
+        assertThat(
+            ops.mean(BigDecimal(5), BigDecimal(-5), BigDecimal(1), BigDecimal(-1)),
+            comparesEqualTo(BigDecimal(0))
+        )
     }
 
     @Test
     fun testMedian() {
-        Assert.assertThat(bd(6f),
-            Matchers.comparesEqualTo(
-                    ops.median(bd(3f), bd(1f), bd(3f), bd(9f), bd(8f), bd(7f), bd(6f))))
-        Assert.assertThat(bd(4.5f),
-            Matchers.comparesEqualTo(
-                    ops.median(bd(9f), bd(1f), bd(8f), bd(2f), bd(6f), bd(3f), bd(5f), bd(4f))))
+        assertThat(
+            ops.median(
+                BigDecimal(3),
+                BigDecimal(1),
+                BigDecimal(3),
+                BigDecimal(9),
+                BigDecimal(8),
+                BigDecimal(7),
+                BigDecimal(6)
+            ),
+            comparesEqualTo(BigDecimal(6))
+        )
+        assertThat(
+            ops.median(
+                BigDecimal(9),
+                BigDecimal(1),
+                BigDecimal(8),
+                BigDecimal(2),
+                BigDecimal(6),
+                BigDecimal(3),
+                BigDecimal(5),
+                BigDecimal(4)
+            ),
+            comparesEqualTo(BigDecimal(4.5))
+        )
     }
 }
